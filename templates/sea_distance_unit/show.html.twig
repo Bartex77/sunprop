@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SeaDistanceUnit{% endblock %}
+
+{% block body %}
+    <h1>SeaDistanceUnit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sea_distance_unit.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ sea_distance_unit.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sea_distance_unit_index') }}">back to list</a>
+
+    <a href="{{ path('sea_distance_unit_edit', {'id': sea_distance_unit.id}) }}">edit</a>
+
+    {{ include('sea_distance_unit/_delete_form.html.twig') }}
+{% endblock %}

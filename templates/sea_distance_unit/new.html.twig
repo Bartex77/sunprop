@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New SeaDistanceUnit{% endblock %}
+
+{% block body %}
+    <h1>Create new SeaDistanceUnit</h1>
+
+    {{ include('sea_distance_unit/_form.html.twig') }}
+
+    <a href="{{ path('sea_distance_unit_index') }}">back to list</a>
+{% endblock %}

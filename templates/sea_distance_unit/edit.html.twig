@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit SeaDistanceUnit{% endblock %}
+
+{% block body %}
+    <h1>Edit SeaDistanceUnit</h1>
+
+    {{ include('sea_distance_unit/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('sea_distance_unit_index') }}">back to list</a>
+
+    {{ include('sea_distance_unit/_delete_form.html.twig') }}
+{% endblock %}

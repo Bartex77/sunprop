@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SeaDistanceUnit index{% endblock %}
+
+{% block body %}
+    <h1>SeaDistanceUnit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sea_distance_unit in sea_distance_units %}
+            <tr>
+                <td>{{ sea_distance_unit.id }}</td>
+                <td>{{ sea_distance_unit.name }}</td>
+                <td>
+                    <a href="{{ path('sea_distance_unit_show', {'id': sea_distance_unit.id}) }}">show</a>
+                    <a href="{{ path('sea_distance_unit_edit', {'id': sea_distance_unit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('sea_distance_unit_new') }}">Create new</a>
+{% endblock %}

@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PropertyTypeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TypeRepository")
  */
-class PropertyType
+class Type
 {
     /**
      * @ORM\Id()
@@ -24,7 +24,7 @@ class PropertyType
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="PropertyType")
+     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="Type")
      */
     private $properties;
 
@@ -62,7 +62,7 @@ class PropertyType
     {
         if (!$this->properties->contains($property)) {
             $this->properties[] = $property;
-            $property->setPropertyType($this);
+            $property->setType($this);
         }
 
         return $this;
@@ -73,11 +73,15 @@ class PropertyType
         if ($this->properties->contains($property)) {
             $this->properties->removeElement($property);
             // set the owning side to null (unless already changed)
-            if ($property->getPropertyType() === $this) {
-                $property->setPropertyType(null);
+            if ($property->getType() === $this) {
+                $property->setType(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }

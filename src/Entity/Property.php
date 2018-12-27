@@ -24,16 +24,16 @@ class Property
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PropertyStatus", inversedBy="properties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="properties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $propertyStatus;
+    private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\PropertyType", inversedBy="properties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="properties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $PropertyType;
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ConstructionType", inversedBy="properties")
@@ -58,9 +58,9 @@ class Property
     private $bathrooms;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\PropertyFeatures", inversedBy="properties")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Amenity", inversedBy="properties")
      */
-    private $propertyFeatures;
+    private $amenities;
 
     /**
      * @ORM\Column(type="integer")
@@ -74,7 +74,7 @@ class Property
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\SeaDistanceUnit")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $seaDistanceUnit;
 
@@ -109,13 +109,18 @@ class Property
     private $additionalServices;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $additionalFees;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\PriceInMonth", mappedBy="property", orphanRemoval=true)
      */
     private $priceInMonth;
 
     public function __construct()
     {
-        $this->propertyFeatures = new ArrayCollection();
+        $this->amenities = new ArrayCollection();
         $this->priceInMonth = new ArrayCollection();
     }
 
@@ -136,26 +141,26 @@ class Property
         return $this;
     }
 
-    public function getPropertyStatus(): ?PropertyStatus
+    public function getStatus(): ?Status
     {
-        return $this->propertyStatus;
+        return $this->status;
     }
 
-    public function setPropertyStatus(?PropertyStatus $propertyStatus): self
+    public function setStatus(?Status $status): self
     {
-        $this->propertyStatus = $propertyStatus;
+        $this->status = $status;
 
         return $this;
     }
 
-    public function getPropertyType(): ?PropertyType
+    public function getType(): ?Type
     {
-        return $this->PropertyType;
+        return $this->type;
     }
 
-    public function setPropertyType(?PropertyType $PropertyType): self
+    public function setType(?Type $type): self
     {
-        $this->PropertyType = $PropertyType;
+        $this->type = $type;
 
         return $this;
     }
@@ -209,26 +214,26 @@ class Property
     }
 
     /**
-     * @return Collection|PropertyFeatures[]
+     * @return Collection|Amenity[]
      */
-    public function getPropertyFeatures(): Collection
+    public function getAmenities(): Collection
     {
-        return $this->propertyFeatures;
+        return $this->amenities;
     }
 
-    public function addPropertyFeature(PropertyFeatures $propertyFeature): self
+    public function addPropertyFeature(Amenity $propertyFeature): self
     {
-        if (!$this->propertyFeatures->contains($propertyFeature)) {
-            $this->propertyFeatures[] = $propertyFeature;
+        if (!$this->amenities->contains($propertyFeature)) {
+            $this->amenities[] = $propertyFeature;
         }
 
         return $this;
     }
 
-    public function removePropertyFeature(PropertyFeatures $propertyFeature): self
+    public function removePropertyFeature(Amenity $propertyFeature): self
     {
-        if ($this->propertyFeatures->contains($propertyFeature)) {
-            $this->propertyFeatures->removeElement($propertyFeature);
+        if ($this->amenities->contains($propertyFeature)) {
+            $this->amenities->removeElement($propertyFeature);
         }
 
         return $this;
@@ -342,6 +347,18 @@ class Property
         return $this;
     }
 
+    public function getAdditionalFees(): ?string
+    {
+        return $this->additionalServices;
+    }
+
+    public function setAdditionalFees(?string $additionalServices): self
+    {
+        $this->additionalServices = $additionalServices;
+
+        return $this;
+    }
+
     /**
      * @return Collection|PriceInMonth[]
      */
@@ -371,5 +388,9 @@ class Property
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }

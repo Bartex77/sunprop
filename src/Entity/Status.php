@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PropertyStatusRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StatusRepository")
  */
-class PropertyStatus
+class Status
 {
     /**
      * @ORM\Id()
@@ -62,7 +62,7 @@ class PropertyStatus
     {
         if (!$this->properties->contains($property)) {
             $this->properties[] = $property;
-            $property->setPropertyStatus($this);
+            $property->setStatus($this);
         }
 
         return $this;
@@ -73,8 +73,8 @@ class PropertyStatus
         if ($this->properties->contains($property)) {
             $this->properties->removeElement($property);
             // set the owning side to null (unless already changed)
-            if ($property->getPropertyStatus() === $this) {
-                $property->setPropertyStatus(null);
+            if ($property->getStatus() === $this) {
+                $property->setStatus(null);
             }
         }
 

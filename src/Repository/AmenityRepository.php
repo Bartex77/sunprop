@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\PropertyFeature;
+use App\Entity\Amenity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * @method PropertyFeature|null find($id, $lockMode = null, $lockVersion = null)
- * @method PropertyFeature|null findOneBy(array $criteria, array $orderBy = null)
- * @method PropertyFeature[]    findAll()
- * @method PropertyFeature[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Amenity|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Amenity|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Amenity[]    findAll()
+ * @method Amenity[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PropertyFeaturesRepository extends ServiceEntityRepository
+class AmenityRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, PropertyFeature::class);
+        parent::__construct($registry, Amenity::class);
     }
 
     // /**
-    //  * @return PropertyFeature[] Returns an array of PropertyFeature objects
+    //  * @return Amenity[] Returns an array of Amenity objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class PropertyFeaturesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?PropertyFeature
+    public function findOneBySomeField($value): ?Amenity
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
