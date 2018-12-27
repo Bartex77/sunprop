@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PropertyFeaturesRepository")
  */
-class PropertyFeatures
+class PropertyFeature
 {
     /**
      * @ORM\Id()
@@ -76,5 +76,9 @@ class PropertyFeatures
         }
 
         return $this;
+    }
+
+    public function __toString() {
+        return $this->name;
     }
 }
