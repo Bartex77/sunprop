@@ -16,3 +16,4 @@ return [
     Symfony\Bundle\WebServerBundle\WebServerBundle::class => ['dev' => true],
     FOS\RestBundle\FOSRestBundle::class => ['all' => true],
 ];
+//EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle::class => ['all' => true],

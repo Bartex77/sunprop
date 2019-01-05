@@ -27,7 +27,7 @@ class PropertyType extends AbstractType
             ->add('additionalServices')
             ->add('additionalFees')
             ->add('status')
-            ->add('type')
+            ->add('propertytype')
             ->add('constructionType')
             ->add('town')
         ;

@@ -30,10 +30,10 @@ class Property
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="properties")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Propertytype", inversedBy="properties")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type;
+    private $propertytype;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ConstructionType", inversedBy="properties")
@@ -53,7 +53,7 @@ class Property
     private $bedrooms;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="decimal", precision=3, scale=1, nullable=true)
      */
     private $bathrooms;
 
@@ -153,14 +153,14 @@ class Property
         return $this;
     }
 
-    public function getType(): ?Type
+    public function getPropertytype(): ?Propertytype
     {
-        return $this->type;
+        return $this->propertytype;
     }
 
-    public function setType(?Type $type): self
+    public function setPropertytype(?Propertytype $propertytype): self
     {
-        $this->type = $type;
+        $this->propertytype = $propertytype;
 
         return $this;
     }
@@ -221,19 +221,19 @@ class Property
         return $this->amenities;
     }
 
-    public function addPropertyFeature(Amenity $propertyFeature): self
+    public function addAmenity(Amenity $amenity): self
     {
-        if (!$this->amenities->contains($propertyFeature)) {
-            $this->amenities[] = $propertyFeature;
+        if (!$this->amenities->contains($amenity)) {
+            $this->amenities[] = $amenity;
         }
 
         return $this;
     }
 
-    public function removePropertyFeature(Amenity $propertyFeature): self
+    public function removeAmenity(Amenity $amenity): self
     {
-        if ($this->amenities->contains($propertyFeature)) {
-            $this->amenities->removeElement($propertyFeature);
+        if ($this->amenities->contains($amenity)) {
+            $this->amenities->removeElement($amenity);
         }
 
         return $this;

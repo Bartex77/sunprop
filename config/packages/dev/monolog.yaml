@@ -8,10 +8,10 @@ monolog:
         # uncomment to get logging in your browser
         # you may have to allow bigger header sizes in your Web server configuration
         #firephp:
-        #    type: firephp
+        #    propertytype: firephp
         #    level: info
         #chromephp:
-        #    type: chromephp
+        #    propertytype: chromephp
         #    level: info
         console:
             type: console

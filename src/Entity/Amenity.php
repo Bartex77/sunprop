@@ -24,7 +24,7 @@ class Amenity
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Property", mappedBy="propertyFeatures")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Property", mappedBy="amenities")
      */
     private $properties;
 
@@ -62,7 +62,7 @@ class Amenity
     {
         if (!$this->properties->contains($property)) {
             $this->properties[] = $property;
-            $property->addPropertyFeature($this);
+            $property->addAmenity($this);
         }
 
         return $this;
@@ -72,7 +72,7 @@ class Amenity
     {
         if ($this->properties->contains($property)) {
             $this->properties->removeElement($property);
-            $property->removePropertyFeature($this);
+            $property->removeAmenity($this);
         }
 
         return $this;

@@ -24,7 +24,7 @@ class Status
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="propertyStatus")
+     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="status")
      */
     private $properties;
 
