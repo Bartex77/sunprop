@@ -24,6 +24,25 @@ class Property
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $link;
+
+    /**
+     * @return mixed
+     */
+    public function getLink() {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link): void {
+        $this->link = $link;
+    }
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="properties")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -31,7 +50,7 @@ class Property
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Propertytype", inversedBy="properties")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $propertytype;
 
