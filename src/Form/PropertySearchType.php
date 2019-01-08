@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -30,11 +31,28 @@ class PropertySearchType extends AbstractType
                         ->orderBy('ct.name', 'ASC');
                 }
             ])
-            ->add('bedrooms', TextType::class)
-            ->add('bathrooms', TextType::class)
+            ->add('bedrooms', ChoiceType::class, [
+                'choices' => [
+                    '0' => null,
+                    '1+' => 1,
+                    '2+' => 2,
+                    '3+' => 3,
+                    '4+' => 4
+                ]
+            ])
+            ->add('bathrooms', ChoiceType::class, [
+                'choices' => [
+                    '1' => 1,
+                    '1,5' => 1.5,
+                    '2' => 2,
+                    '2,5' => 2.5,
+                    '3+' => 3
+                ]
+            ])
             ->add('amenity', EntityType::class, [
                 'class' => Amenity::class,
                 'multiple' => true,
+                'expanded' => true,
                 'query_builder' => function (EntityRepository $er) {
                     $amenitiesId = [2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
                     return $er->createQueryBuilder('a')
@@ -46,7 +64,8 @@ class PropertySearchType extends AbstractType
             ->add('province', EntityType::class, [
                 'class' => Province::class,
                 'placeholder' => 'Choose province',
-                'multiple' => true
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->get('province')->addEventListener(FormEvents::SUBMIT, [$this, 'addTowns']);
         ;
@@ -66,8 +85,8 @@ class PropertySearchType extends AbstractType
             'class' => Town::class,
             'placeholder' => 'Choose town',
             'multiple' => true,
+            'expanded' => true,
             'query_builder' => function (EntityRepository $er) use ($data) {
-                dump($data);
                 return $er->createQueryBuilder('t')
                     ->where('t.province IN (:province)')
                     ->setParameter('province', $data[0])

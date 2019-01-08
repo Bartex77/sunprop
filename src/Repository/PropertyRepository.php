@@ -19,6 +19,25 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
 
+    public function fetchSearchResults($searchQuery) {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.status = :status')
+            ->andWhere('p.constructionType = :constructionType')
+            ->andWhere('p.bathrooms = :bathrooms')
+            ->setParameter('status', 1)
+            ->setParameter('constructionType', $searchQuery['constructionType'])
+            ->setParameter('bathrooms', $searchQuery['bathrooms'])
+        ;
+
+        if (!is_null($searchQuery['bedrooms'])) {
+            $qb
+                ->andWhere('p.bedrooms = :bedrooms')
+                ->setParameter('bedrooms', $searchQuery['bedrooms']);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Property[] Returns an array of Property objects
     //  */

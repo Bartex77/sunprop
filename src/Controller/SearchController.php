@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Property;
 use App\Form\PropertySearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,20 @@ class SearchController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $searchQuery = $form->getData();
             dump($searchQuery);
+
+            $propertyRepository = $this->getDoctrine()->getRepository(Property::class);
+            $searchResults = $propertyRepository->fetchSearchResults($searchQuery);
+
+            return $this->render('search/results.html.twig', [
+                'controller_name'   => 'SearchController',
+                'search_form'       => $form->createView(),
+                'searchResults'     => $searchResults
+            ]);
         }
 
         return $this->render('search/index.html.twig', [
             'controller_name'   => 'SearchController',
-            'search_form'        => $form->createView()
+            'search_form'       => $form->createView()
         ]);
     }
 }
