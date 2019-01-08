@@ -25,12 +25,12 @@ class SearchController extends AbstractController
 
             $propertyRepository = $this->getDoctrine()->getRepository(Property::class);
             $searchResults = $propertyRepository->fetchSearchResults($searchQuery);
-
-            return $this->render('search/results.html.twig', [
+dump($searchResults);
+/*            return $this->render('search/results.html.twig', [
                 'controller_name'   => 'SearchController',
                 'search_form'       => $form->createView(),
                 'searchResults'     => $searchResults
-            ]);
+            ]);*/
         }
 
         return $this->render('search/index.html.twig', [
