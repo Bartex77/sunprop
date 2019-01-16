@@ -3,19 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Property;
-use App\Form\PropertySearchType;
+use App\Form\PropertySearchSaleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class SearchController extends AbstractController
+class SearchSaleController extends AbstractController
 {
     /**
-     * @Route("/search", name="search")
+     * @Route("/searchSale", name="searchSale")
      */
     public function index(Request $request)
     {
-        $form = $this->createForm(PropertySearchType::class);
+        $form = $this->createForm(PropertySearchSaleType::class);
 
         $form->handleRequest($request);
 
@@ -26,15 +26,15 @@ class SearchController extends AbstractController
             $propertyRepository = $this->getDoctrine()->getRepository(Property::class);
             $searchResults = $propertyRepository->fetchSearchResults($searchQuery);
 
-            return $this->render('search/results.html.twig', [
-                'controller_name'   => 'SearchController',
+            return $this->render('search/resultsSale.html.twig', [
+                'controller_name'   => 'SearchSaleController',
                 'search_form'       => $form->createView(),
                 'searchResults'     => $searchResults
             ]);
         }
 
         return $this->render('search/index.html.twig', [
-            'controller_name'   => 'SearchController',
+            'controller_name'   => 'SearchSaleController',
             'search_form'       => $form->createView()
         ]);
     }

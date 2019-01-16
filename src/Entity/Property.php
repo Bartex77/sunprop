@@ -67,6 +67,12 @@ class Property
     private $town;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\District", inversedBy="properties")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $district;
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $bedrooms;
@@ -103,7 +109,7 @@ class Property
     private $livingRooms;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $maxNumberOfPeople;
 
@@ -204,6 +210,18 @@ class Property
     public function setTown(?Town $town): self
     {
         $this->town = $town;
+
+        return $this;
+    }
+
+    public function getDistrict(): ?District
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(?District $district): self
+    {
+        $this->district = $district;
 
         return $this;
     }

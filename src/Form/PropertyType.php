@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Amenity;
+use App\Entity\District;
 use App\Entity\Property;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,6 +43,10 @@ class PropertyType extends AbstractType
             ->add('propertytype')
             ->add('constructionType')
             ->add('town')
+            ->add('district', EntityType::class, [
+                'class' => District::class,
+                'placeholder' => 'Choose district'
+            ])
         ;
     }
 

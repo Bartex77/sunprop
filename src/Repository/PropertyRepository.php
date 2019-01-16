@@ -27,7 +27,7 @@ class PropertyRepository extends ServiceEntityRepository
             ->where('p.status = :status')
             ->andWhere('p.constructionType = :constructionType')
             ->andWhere('p.bathrooms >= :bathrooms')
-            ->setParameter('status', 1)
+            ->setParameter('status', $searchQuery['status'])
             ->setParameter('constructionType', $searchQuery['constructionType'])
             ->setParameter('bathrooms', $searchQuery['bathrooms'])
         ;
@@ -38,7 +38,11 @@ class PropertyRepository extends ServiceEntityRepository
                 ->setParameter('bedrooms', $searchQuery['bedrooms']);
         }
 
-        if (!($searchQuery['town']->isEmpty())) {
+        if (!($searchQuery['district']->isEmpty())) {
+            $qb
+                ->andWhere('p.district IN (:district)')
+                ->setParameter('district', $searchQuery['district']);
+        } elseif (!($searchQuery['town']->isEmpty())) {
             $qb
                 ->andWhere('p.town IN (:town)')
                 ->setParameter('town', $searchQuery['town']);

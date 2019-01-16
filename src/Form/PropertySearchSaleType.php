@@ -4,19 +4,20 @@ namespace App\Form;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Province;
 use App\Entity\Town;
+use App\Entity\District;
 use App\Entity\ConstructionType;
 use App\Entity\Amenity;
 
-class PropertySearchType extends AbstractType
+class PropertySearchSaleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -67,10 +68,21 @@ class PropertySearchType extends AbstractType
                 'multiple' => true,
                 'expanded' => true,
             ])
+            ->add('town', EntityType::class, [
+                'class' => Town::class,
+                'placeholder' => 'Choose town',
+                'multiple' => true,
+                'expanded' => true,
+            ])
+            ->add('district', EntityType::class, [
+                'class' => District::class,
+                'placeholder' => 'Choose area',
+                'multiple' => true,
+                'expanded' => true,
+            ])
             ->add('status', HiddenType::class, [
                 'data' => 2
             ])
-            ->get('province')->addEventListener(FormEvents::SUBMIT, [$this, 'addTowns']);
         ;
     }
 
@@ -96,6 +108,32 @@ class PropertySearchType extends AbstractType
                     ->orderBy('t.name', 'ASC');
             }
         ]);
+    }
+
+    public function addAreas(FormEvent $event)
+    {
+        $form = $event->getForm()->getParent(); // modify the **parent** form
+        // during SUBMIT event, ->getData() actually is the resolved object
+        $data = $event->getData();
+
+        if (empty($data)) {
+            return;
+        }
+
+        try {
+            $form->add('area', EntityType::class, [
+                'class' => District::class,
+                'placeholder' => 'Choose area',
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function (EntityRepository $er) use ($data) {
+                    return $er->createQueryBuilder('t')
+                        ->where('t.town IN (:town)')
+                        ->setParameter('town', $data[0])
+                        ->orderBy('t.name', 'ASC');
+                }
+            ]);
+        } catch (\Exception $e) {}
     }
 
     public function configureOptions(OptionsResolver $resolver)

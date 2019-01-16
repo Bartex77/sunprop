@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TownRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DistrictRepository")
  */
-class Town
+class District
 {
     /**
      * @ORM\Id()
@@ -24,25 +24,19 @@ class Town
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="towns")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Town", inversedBy="areas")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $province;
+    private $town;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="town")
+     * @ORM\OneToMany(targetEntity="App\Entity\Property", mappedBy="district")
      */
     private $properties;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\District", mappedBy="town", orphanRemoval=true)
-     */
-    private $districts;
 
     public function __construct()
     {
         $this->properties = new ArrayCollection();
-        $this->districts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -62,14 +56,14 @@ class Town
         return $this;
     }
 
-    public function getProvince(): ?Province
+    public function getTown(): ?Town
     {
-        return $this->province;
+        return $this->town;
     }
 
-    public function setProvince(?Province $province): self
+    public function setTown(?Town $town): self
     {
-        $this->province = $province;
+        $this->town = $town;
 
         return $this;
     }
@@ -86,7 +80,7 @@ class Town
     {
         if (!$this->properties->contains($property)) {
             $this->properties[] = $property;
-            $property->setTown($this);
+            $property->setDistrict($this);
         }
 
         return $this;
@@ -97,8 +91,8 @@ class Town
         if ($this->properties->contains($property)) {
             $this->properties->removeElement($property);
             // set the owning side to null (unless already changed)
-            if ($property->getTown() === $this) {
-                $property->setTown(null);
+            if ($property->getDistrict() === $this) {
+                $property->setDistrict(null);
             }
         }
 
@@ -107,36 +101,5 @@ class Town
 
     public function __toString() {
         return $this->name;
-    }
-
-    /**
-     * @return Collection|District[]
-     */
-    public function getDistricts(): Collection
-    {
-        return $this->districts;
-    }
-
-    public function addDistrict(District $district): self
-    {
-        if (!$this->districts->contains($district)) {
-            $this->districts[] = $district;
-            $district->setTown($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDistrict(District $district): self
-    {
-        if ($this->districts->contains($district)) {
-            $this->districts->removeElement($district);
-            // set the owning side to null (unless already changed)
-            if ($district->getTown() === $this) {
-                $district->setTown(null);
-            }
-        }
-
-        return $this;
     }
 }
