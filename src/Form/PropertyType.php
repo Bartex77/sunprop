@@ -8,6 +8,7 @@ use App\Entity\Property;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,6 +23,7 @@ class PropertyType extends AbstractType
             ->add('bedrooms')
             ->add('bathrooms')
             ->add('livingRooms')
+            ->add('price')
             ->add('surface')
             ->add('seaDistance')
             ->add('seaDistanceUnit')

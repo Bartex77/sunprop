@@ -83,6 +83,11 @@ class Property
     private $bathrooms;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $price;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Amenity", inversedBy="properties")
      */
     private $amenities;
@@ -133,20 +138,9 @@ class Property
      */
     private $additionalServices;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $additionalFees;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\PriceInMonth", mappedBy="property", orphanRemoval=true)
-     */
-    private $priceInMonth;
-
     public function __construct()
     {
         $this->amenities = new ArrayCollection();
-        $this->priceInMonth = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -360,6 +354,18 @@ class Property
         return $this;
     }
 
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?int $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
     public function getAdditionalEquipment(): ?string
     {
         return $this->additionalEquipment;
@@ -399,7 +405,7 @@ class Property
     /**
      * @return Collection|PriceInMonth[]
      */
-    public function getPriceInMonth(): Collection
+/*    public function getPriceInMonth(): Collection
     {
         return $this->priceInMonth;
     }
@@ -425,7 +431,7 @@ class Property
         }
 
         return $this;
-    }
+    }*/
 
     public function __toString() {
         return $this->name;
