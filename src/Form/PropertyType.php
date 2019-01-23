@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use A2lix\TranslationFormBundle\Form\Type\TranslatedEntityType;
 
 class PropertyType extends AbstractType
 {
@@ -29,7 +30,17 @@ class PropertyType extends AbstractType
             ->add('seaDistanceUnit')
             ->add('maxNumberOfPeople')
             ->add('minimumStay')
-            ->add('amenities', EntityType::class, [
+            ->add('amenities', TranslatedEntityType::class, [
+                'class' => Amenity::class,
+                'translation_property' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+/*                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
+                }*/
+                ])
+            /*            ->add('amenities', EntityType::class, [
                 'class' => Amenity::class,
                 'multiple' => true,
                 'expanded' => true,
@@ -37,7 +48,7 @@ class PropertyType extends AbstractType
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.name', 'ASC');
                 }
-            ])
+            ])*/
             ->add('additionalEquipment')
             ->add('additionalServices')
             ->add('additionalFees')

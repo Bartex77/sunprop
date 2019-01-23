@@ -17,7 +17,7 @@
         {% for amenity in amenities %}
             <tr>
                 <td>{{ amenity.id }}</td>
-                <td>{{ amenity.name }}</td>
+                <td>{{ amenity.translate('en').name }}</td>
                 <td>
                     <a href="{{ path('amenity_show', {'id': amenity.id}) }}">show</a>
                     <a href="{{ path('amenity_edit', {'id': amenity.id}) }}">edit</a>
