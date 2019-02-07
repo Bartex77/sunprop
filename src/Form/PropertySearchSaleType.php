@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslatedEntityType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -43,23 +44,21 @@ class PropertySearchSaleType extends AbstractType
             ])
             ->add('bathrooms', ChoiceType::class, [
                 'choices' => [
-                    '1' => 1,
-                    '1,5' => 1.5,
-                    '2' => 2,
-                    '2,5' => 2.5,
+                    '1+' => 1,
+                    '2+' => 2,
                     '3+' => 3
                 ]
             ])
-            ->add('amenity', EntityType::class, [
+            ->add('amenity', TranslatedEntityType::class, [
                 'class' => Amenity::class,
+                'translation_property' => 'name',
                 'multiple' => true,
                 'expanded' => true,
                 'query_builder' => function (EntityRepository $er) {
-                    $amenitiesId = [2, 3, 4, 5, 6, 7, 9, 10, 12, 19];
                     return $er->createQueryBuilder('a')
-                        ->where('a.id IN (:id)')
-                        ->setParameter('id', $amenitiesId)
-                        ->orderBy('a.name', 'ASC');
+                        ->where('a.visibleSale = (:visibleSale)')
+                        ->setParameter('visibleSale', true)
+                        ->orderBy('a.showOrder', 'ASC');
                 }
             ])
             ->add('province', EntityType::class, [

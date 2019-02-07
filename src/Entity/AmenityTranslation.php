@@ -32,5 +32,7 @@ class AmenityTranslation
     public function setName($name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 }

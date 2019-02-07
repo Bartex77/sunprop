@@ -21,6 +21,15 @@ class PropertyType extends AbstractType
             ->add('link')
             ->add('name')
             ->add('description')
+            ->add('status')
+            ->add('propertytype')
+            ->add('constructionType')
+            ->add('town')
+            ->add('district', EntityType::class, [
+                'class' => District::class,
+                'placeholder' => 'Choose area',
+                'label' => 'Area'
+            ])
             ->add('bedrooms')
             ->add('bathrooms')
             ->add('livingRooms')
@@ -35,10 +44,10 @@ class PropertyType extends AbstractType
                 'translation_property' => 'name',
                 'multiple' => true,
                 'expanded' => true,
-/*                'query_builder' => function (EntityRepository $er) {
+                'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('a')
-                        ->orderBy('a.name', 'ASC');
-                }*/
+                        ->orderBy('a.showOrder', 'ASC');
+                }
                 ])
             /*            ->add('amenities', EntityType::class, [
                 'class' => Amenity::class,
@@ -52,14 +61,6 @@ class PropertyType extends AbstractType
             ->add('additionalEquipment')
             ->add('additionalServices')
             ->add('additionalFees')
-            ->add('status')
-            ->add('propertytype')
-            ->add('constructionType')
-            ->add('town')
-            ->add('district', EntityType::class, [
-                'class' => District::class,
-                'placeholder' => 'Choose district'
-            ])
         ;
     }
 

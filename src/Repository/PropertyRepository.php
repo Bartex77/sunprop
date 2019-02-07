@@ -38,7 +38,7 @@ class PropertyRepository extends ServiceEntityRepository
                 ->setParameter('bedrooms', $searchQuery['bedrooms']);
         }
 
-        if (!($searchQuery['district']->isEmpty())) {
+        if (isset($searchQuery['district']) && !($searchQuery['district']->isEmpty())) {
             $qb
                 ->andWhere('p.district IN (:district)')
                 ->setParameter('district', $searchQuery['district']);

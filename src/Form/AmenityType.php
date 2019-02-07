@@ -4,11 +4,12 @@ namespace App\Form;
 
 use A2lix\TranslationFormBundle\Form\Type\TranslationsType;
 use App\Entity\Amenity;
+use App\Entity\Property;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AmenityType extends AbstractType
 {
@@ -24,7 +25,18 @@ class AmenityType extends AbstractType
                     ]
                 ]
             ])*/
-            ->add('properties')
+            ->add('visibleRent')
+            ->add('visibleSale')
+            ->add('showOrder')
+            ->add('properties', EntityType::class, [
+                'class' => Property::class,
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('p')
+                        ->orderBy('p.name', 'ASC');
+                }
+            ])
         ;
     }
 

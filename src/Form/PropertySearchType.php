@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use A2lix\TranslationFormBundle\Form\Type\TranslatedEntityType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -42,14 +43,23 @@ class PropertySearchType extends AbstractType
             ])
             ->add('bathrooms', ChoiceType::class, [
                 'choices' => [
-                    '1' => 1,
-                    '1,5' => 1.5,
-                    '2' => 2,
-                    '2,5' => 2.5,
+                    '1+' => 1,
+                    '2+' => 2,
                     '3+' => 3
                 ]
             ])
-            ->add('amenity', EntityType::class, [
+            ->add('amenity', TranslatedEntityType::class, [
+                'class' => Amenity::class,
+                'translation_property' => 'name',
+                'multiple' => true,
+                'expanded' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('a')
+                        ->where('a.visibleRent = (:visibleRent)')
+                        ->setParameter('visibleRent', true)
+                        ->orderBy('a.showOrder', 'ASC');
+                }
+/*            ->add('amenity', EntityType::class, [
                 'class' => Amenity::class,
                 'multiple' => true,
                 'expanded' => true,
@@ -59,7 +69,7 @@ class PropertySearchType extends AbstractType
                         ->where('a.id IN (:id)')
                         ->setParameter('id', $amenitiesId)
                         ->orderBy('a.name', 'ASC');
-                }
+                }*/
             ])
             ->add('province', EntityType::class, [
                 'class' => Province::class,
@@ -68,7 +78,7 @@ class PropertySearchType extends AbstractType
                 'expanded' => true,
             ])
             ->add('status', HiddenType::class, [
-                'data' => 2
+                'data' => 1
             ])
             ->get('province')->addEventListener(FormEvents::SUBMIT, [$this, 'addTowns']);
         ;

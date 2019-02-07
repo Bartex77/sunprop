@@ -26,6 +26,63 @@ class Amenity
      */
     private $properties;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visibleRent;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $visibleSale;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $showOrder;
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleRent() {
+        return $this->visibleRent;
+    }
+
+    /**
+     * @param boolean $visibleRent
+     */
+    public function setVisibleRent($visibleRent): void {
+        $this->visibleRent = $visibleRent;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isVisibleSale() {
+        return $this->visibleSale;
+    }
+
+    /**
+     * @param boolean $visibleSale
+     */
+    public function setVisibleSale($visibleSale): void {
+        $this->visibleSale = $visibleSale;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getShowOrder() {
+        return $this->showOrder;
+    }
+
+    /**
+     * @param string $showOrder
+     */
+    public function setShowOrder($showOrder): void {
+        $this->showOrder = $showOrder;
+    }
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();

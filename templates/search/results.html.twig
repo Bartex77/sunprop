@@ -1,26 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}Find your holiday home!{% endblock %}
 
 {% block body %}
     <style>
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        .main-container { max-width: 1100px; margin: auto; }
+        .grid-container { display: grid; grid-template-columns: auto auto auto auto; }
+        .grid-element { max-width: 250px; display: inline-grid}
+        .grid-image { margin-bottom: 10px; }
+        .grid-description {
+            margin-bottom: 20px;
+            margin-left: 5px;
+        }
+        .grid-description a {
+            font-family: Arial, Helvetica, sans-serif;;
+            color: rgb(1, 180, 225);
+            font-weight: bold;
+        }
+        .town {
+            font-family: Arial, Helvetica, sans-serif;;
+            color: rgb(1, 180, 225);
+            font-weight: bold;
+        }
     </style>
 
-    <div class="example-wrapper">
+    <div class="column-margin"></div>
 
-        {{ form_start(search_form) }}
-        {{ form_widget(search_form) }}
-        <button class="btn">{{ button_label|default('Search') }}</button>
-        {{ form_end(search_form) }}
+    <div class="main-container">
+        <div class="example-wrapper">
 
-    <div>
-        {% for searchResult in searchResults %}
-            <div>
-                <a href="{{ searchResult.link }}">{{ searchResult.name }}</a>
-            </div>
-        {% endfor %}
+            {{ form_start(search_form) }}
+            {{ form_widget(search_form) }}
+            <button class="btn">{{ button_label|default('Search') }}</button>
+            {{ form_end(search_form) }}
+        </div>
+
+        <div class="grid-container">
+            {% for searchResult in searchResults %}
+                <div class="grid-element">
+                    <div class="grid-image">
+                    <a href="{{ searchResult.link }}"><img src="build/apart{{ searchResult.id }}.jpg" alt="Apartment" /></a>
+                    </div>
+                    <div class="grid-description">
+                        <a href="{{ searchResult.link }}">{{ searchResult.name }}</a>
+                        <br />
+                        <span class="town">{{ searchResult.town }}, {{ searchResult.town.province }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-
+    <div class="column-margin"></div>
 {% endblock %}

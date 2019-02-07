@@ -12,8 +12,12 @@
                 <td>{{ amenity.id }}</td>
             </tr>
             <tr>
-                <th>Name</th>
-                <td>{{ amenity.name }}</td>
+                <th>Name [en]</th>
+                <td>{{ amenity.translate('en').name }}</td>
+            </tr>
+            <tr>
+                <th>Name [pl]</th>
+                <td>{{ amenity.translate('pl').name }}</td>
             </tr>
         </tbody>
     </table>
