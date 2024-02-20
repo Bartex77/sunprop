@@ -122,6 +122,6 @@ class Amenity
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->'string ' . name;
     }
 }
